@@ -1,0 +1,36 @@
+#多环境通用配置
+spring:
+  profiles:
+    active: ${profile:dev}
+  application:
+    name: redis-test
+  jackson:
+    parser:
+      #允许出现特殊字符和转义符
+      allow_unquoted_control_chars: true
+# actuator 服务的端口，为了安全考虑此端口只允许内网访问
+management:
+  port: 36666
+
+server:
+  port: ${port:8080}
+
+# 线程池配置
+thread:
+  pool:
+    corePoolSize: 50
+    maxPoolSize: 100
+    queueCapacity: 30
+
+---
+#开发环境
+spring:
+  profiles: dev
+  redis:
+    host: 172.16.154.16
+    database: 1
+    pool:
+      max-active: 2000
+      max-idle: 8
+      max-wait: -1
+      min-idle: 2
